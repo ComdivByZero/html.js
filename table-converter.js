@@ -21,7 +21,7 @@ var TableConverter;
 		if (opt && opt.filter) {
 			filter = opt.filter;
 		} else {
-			filter = function(item, line, row) { return item; }
+			filter = function(item, line, row) { return item; };
 		}
 		if (opt.tdclass) {
 			tdc = opt.tdclass;
@@ -85,7 +85,7 @@ var TableConverter;
 		}
 		text[ti] = "</TABLE>";
 		return text.join('');
-	}
+	};
 
 	tc.setToId = function(id, table, opt) {
 		var d;
@@ -94,7 +94,7 @@ var TableConverter;
 			d.innerHTML = tc.toHtml(table, opt);
 		}
 		return d;
-	}
+	};
 
 	tc.toJs = function(table, opt) {
 		var t, i, j, lines, items, filter;
@@ -102,7 +102,7 @@ var TableConverter;
 		if (opt && opt.filter) {
 			filter = opt.filter;
 		} else {
-			filter = function(item, i, j) { return item.innerText; }
+			filter = function(item, i, j) { return item.innerText; };
 		}
 		lines = table.getElementsByTagName("TR");
 		t = [];
@@ -114,7 +114,7 @@ var TableConverter;
 			}
 		}
 		return t;
-	}
+	};
 
 	tc.getById = function(id, opt) {
 		var d, t;
@@ -125,5 +125,5 @@ var TableConverter;
 			t = null;
 		}
 		return t;
-	}
+	};
 })(TableConverter || (TableConverter = {}));

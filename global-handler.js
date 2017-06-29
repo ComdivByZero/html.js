@@ -5,7 +5,7 @@ var GlobalHandler;
 	gh.reset = function() {
 		gh.storage = [];
 		gh.id = 0;
-	}
+	};
 
 	gh.reset();
 
@@ -15,13 +15,13 @@ var GlobalHandler;
 		gh.storage[i] = handler;
 		++gh.id;
 		return {
-			id		: i,
-			name	: "GlobalHandler.storage[" + i + "]"
+			id   : i,
+			name : "GlobalHandler.storage[" + i + "]"
 		};
-	}
+	};
 
 	gh.remove = function(id) {
 		delete gh.storage[id];
-	}
+	};
 
 })(GlobalHandler || (GlobalHandler = {}));
