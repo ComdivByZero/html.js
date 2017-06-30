@@ -7,12 +7,45 @@ var TextareaTab;
 		autoindent: true
 	};
 
-	function isSpace(ch) {
-		return (ch == 32) || (ch == 9);
-	}
-
-	function makeTabable(ta, opt) {
+	function inject(ta, opt) {
 		var tab, auto;
+
+		function listen(e) {
+			function isSpace(ch) {
+				return (ch == ' ') || (ch == '\t');
+			}
+			var start, end, ret, i, j, text, ins;
+
+			start = ta.selectionStart;
+			end = ta.selectionEnd;
+			text = ta.value;
+
+			if (9 == e.which) {
+				ins = tab;
+			} else if (auto && (13 == e.which)) {
+				i = start;
+				while ((i > 0) && (text.charAt(i - 1) != '\n')) {
+					--i;
+				}
+				j = i;
+				while (isSpace(text.charAt(j))) {
+					++j;
+				}
+				ins = "\n" + text.substr(i, j - i);
+			} else {
+				ins = null;
+			}
+			if (ins != null) {
+				ta.value = text.substr(0, start) + ins + text.substr(end);
+				start += ins.length;
+				ta.selectionStart = start;
+				ta.selectionEnd = start;
+
+				e.preventDefault();
+				ret = false;
+			}
+			return ret;
+		}
 
 		if (opt && opt.tab) {
 			opt = opt.tab;
@@ -25,61 +58,23 @@ var TextareaTab;
 			auto = std_options.autoindent;
 		}
 
-		ta.addEventListener('keydown', function (e) {
-			var start, end, ret, i, j, text, ins;
-
-			start = ta.selectionStart;
-			end = ta.selectionEnd;
-			text = ta.value;
-
-			ins = null;
-			switch (e.which) {
-			case 9:
-				ins = tab;
-				break;
-			case 13:
-				if (auto) {
-					i = start;
-					while ((i > 0) && (text.charCodeAt(i - 1) != 10)) {
-						--i;
-					}
-					j = i;
-					while (isSpace(text.charCodeAt(j))) {
-						++j;
-					}
-					ins = "\n" + text.substr(i, j - i);
-				}
-				break;
-			default:
-				break;
-			}
-			if (ins != null) {
-				ta.value = text.substr(0, start) + ins + text.substr(end);
-				start += ins.length;
-				ta.selectionStart = start;
-				ta.selectionEnd = start;
-
-				e.preventDefault();
-				ret = false;
-			}
-			return ret;
-		});
+		ta.addEventListener('keydown', listen);
 	}
 
-	function makeAllTabable(opt) {
+	function injectAll(opt) {
 		var i, a;
 		a = document.getElementsByTagName("textarea");
 		for (i = 0; i < a.length; i += 1) {
-			makeTabable(a[i], opt);
+			inject(a[i], opt);
 		}
 	}
 
-	function makeTabableById(id, opt) {
-		makeTabable(document.getElementById(id), opt);
+	function injectById(id, opt) {
+		inject(document.getElementById(id), opt);
 	}
 
-	tt.makeTabable = makeTabable;
-	tt.makeAllTabable = makeAllTabable;
-	tt.makeTabableById = makeTabableById;
+	tt.inject = inject;
+	tt.injectAll = injectAll;
+	tt.injectById = injectById;
 
 })(TextareaTab || (TextareaTab = {}));
