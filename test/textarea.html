@@ -1,0 +1,28 @@
+<!DOCTYPE HTML><html>
+
+<head>
+  <meta charset='utf-8'>
+  <title>Inject autoindent</title>
+  <script src='../textarea-tab.js'></script>
+</head>
+
+<body>
+  <textarea id='id1'></textarea>
+  <br/>
+  <textarea id='id2'></textarea>
+  <br/>
+  <textarea></textarea>
+  <br/>
+
+  <button onclick='TextareaTab.inject(document.getElementById("id1"))'>
+    TextareaTab.inject(document.getElementById("id1"))
+  </button>
+  <br/>
+  <button onclick='TextareaTab.injectById("id2")'>
+    TextareaTab.injectById("id2")
+  </button>
+  <br/>
+  <button onclick='TextareaTab.injectAll()'>TextareaTab.injectAll()</button>
+</body>
+
+</html>
