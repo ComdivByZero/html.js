@@ -28,7 +28,7 @@ var TextareaTab;
 					--i;
 				}
 				j = i;
-				while (isSpace(text.charAt(j))) {
+				while (isSpace(text.charAt(j)) && (j < start)) {
 					++j;
 				}
 				ins = "\n" + text.substr(i, j - i);
@@ -48,7 +48,7 @@ var TextareaTab;
 		}
 
 		if (opt && opt.tab) {
-			opt = opt.tab;
+			tab = opt.tab;
 		} else {
 			tab = std_options.tab;
 		}
