@@ -16,7 +16,7 @@ var TableConverter;
 		var text, ti, i, j, filter, tdc, thc;
 
 		if (!opt) {
-			opt = s.std_options;
+			opt = tc.std_options;
 		}
 		if (opt && opt.filter) {
 			filter = opt.filter;
